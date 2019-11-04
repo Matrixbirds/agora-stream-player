@@ -1,10 +1,13 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState, useEffect} from 'react';
 import {default as AgoraRTC} from 'agora-electron-sdk';
 
-const APP_ID = 'Your Agora.io APP_ID';
-
-class RTCClient {
+const APP_ID = 'Your agora.io appID';
+export class RTCClient {
   public static engine: any = null;
+
+  public static streams: any[];
+
+  public static _uids: number[];
 
   static initRtcEngine () {
     if(this.engine === null) {
@@ -17,16 +20,57 @@ class RTCClient {
     }
     return this.engine;
   }
+
+  static createScreenSharing(windowId: any, captureFreq: number, rect: { left: number; right: number; top: number; bottom: number }, bitrate: number) {
+    this.engine.startScreenCapture2(windowId, captureFreq, rect, bitrate);
+    this.engine.videoSourceSetVideoProfile(43, false);
+    this.engine.startScreenCapturePreview();
+  }
+
+  static stopScreenCapture2() {
+    this.engine.stopScreenCapture2();
+  }
+
+  static join(channel: string) {
+    this.engine.setChannelProfile(1);
+    this.engine.setAudioProfile(0, 1);
+    this.engine.setClientRole(1);
+    this.engine.setAudioProfile(0, 1);
+    this.engine.joinChannel(null, channel, '', 0);
+  }
 }
 
 const engine = RTCClient.initRtcEngine();
 
 export default function useEngine () {
 
+  const [uids, setUids] = useState<number[]>([]);
+
   const client = useMemo(() => {
     const _client = engine;
     return _client;
   }, []);
 
-  return client;
+  useEffect(() => {
+    if (client) {
+      client.on('addStream', (uid: number, elapsed: number) => {
+        setUids(uids.concat(uid));
+      })
+  
+      client.on('removeStream', (uid: number, elapsed: number) => {
+        setUids(uids.filter((item: number) => item === uid));
+      })
+
+      return () => {
+        client.off('addStream', () => {});
+        client.off('removeStream', () => {});
+      }
+    }
+  }, [client]);
+
+  return {
+    client,
+    uids,
+    setUids
+  }
 }
