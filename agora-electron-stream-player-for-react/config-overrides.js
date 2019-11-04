@@ -5,9 +5,10 @@ const {
 
 module.exports = {
   webpack: override(
-    addWebpackExternals({
-      "agora-electron-sdk": "commonjs2 agora-electron-sdk",
-      AgoraRTCEngine: "commonjs2 agora-electron-sdk"
-    })
+    (config) => {
+      config.externals = {"agora-electron-sdk": "commonjs2 agora-electron-sdk"};
+      // console.log(config.externals)
+      return config;
+    }
   )
 }

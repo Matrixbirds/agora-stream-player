@@ -6,7 +6,8 @@ import './App.css';
 const App: React.FC = () => {
   return (
     <div className="App">
-      <StreamPlayer></StreamPlayer>
+      <StreamPlayer uid={0} domId="local" preview={true}/>
+      <StreamPlayer uid={0} domId="local" preview={true}/>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

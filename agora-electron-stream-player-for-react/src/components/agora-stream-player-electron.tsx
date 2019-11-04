@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useMemo, useState, useEffect} from 'react';
+import useRtcClient from '../hooks/rtc-client';
 
-import * as AgoraRTC from 'agora-electron-sdk';
+export default function StreamPlayerElectron(props: {uid: number, domId: string, preview: boolean}) {
 
-export default function StreamPlayerElectron() {
+  const client = useRtcClient();
 
-  // @ts-ignore
-  window.AgoraRTC = AgoraRTC;
-  console.log(AgoraRTC);
+  useEffect(() => {
+    const dom = document.querySelector(`#${props.domId}`);
+    if (dom) {
+      if (props.preview) {
+        client.setupLocalVideo(dom);
+        client.startPreview();
+      } else {
+        client.subscribe(props.uid, dom);
+        client.setupViewContentMode(props.uid, 1);
+      }
+    }
+  }, []);
 
   return (
-    <div></div>
+    <div id={props.domId} className="agora-stream-player">
+
+    </div>
   )
 }
