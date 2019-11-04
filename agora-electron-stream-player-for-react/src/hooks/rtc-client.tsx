@@ -1,7 +1,7 @@
 import React, {useMemo, useState, useEffect} from 'react';
 import {default as AgoraRTC} from 'agora-electron-sdk';
 
-const APP_ID = 'Your agora.io appID';
+const APP_ID = 'Your Agora.io appID';
 export class RTCClient {
   public static engine: any = null;
 
@@ -68,9 +68,24 @@ export default function useEngine () {
     }
   }, [client]);
 
+  const cameraList = useMemo(() => {
+    return client.getVideoDevices();
+  }, [client]);
+
+  const microphoneList = useMemo(() => {
+    return client.getAudioRecordingDevices();
+  }, [client]);
+
+  const speakerList = useMemo(() => {
+    return client.getAudioPlaybackDevices();
+  }, [client]);
+
   return {
     client,
     uids,
-    setUids
+    setUids,
+    cameraList,
+    microphoneList,
+    speakerList
   }
 }
