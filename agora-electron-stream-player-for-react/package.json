@@ -1,0 +1,54 @@
+{
+  "name": "agora-electron-stream-player-for-react",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/electron-starter.js",
+  "homepage": "./",
+  "dependencies": {
+    "@types/jest": "24.0.21",
+    "@types/node": "12.12.5",
+    "@types/react": "16.9.11",
+    "@types/react-dom": "16.9.3",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-scripts": "3.2.0",
+    "typescript": "3.6.4",
+    "react-app-rewired": "2.1.4",
+    "customize-cra": "^0.8.0",
+    "electron": "5.0.8",
+    "electron-builder": "22.1.0",
+    "agora-electron-sdk": "2.3.4-hotfix.9"
+  },
+  "scripts": {
+    "dev": "nf start",
+    "web-dev": "BROWSER=none react-app-rewired start",
+    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject",
+    "electron": "electron ."
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "agora_electron": {
+    "electron_version": "5.0.8",
+    "prebuilt": true,
+    "platform": "darwin"
+  },
+  "devDependencies": {
+    "foreman": "^3.0.1"
+  }
+}
