@@ -11,7 +11,7 @@
     "@types/react-dom": "16.9.3",
     "agora-electron-sdk": "2.3.4-hotfix.9",
     "customize-cra": "^0.8.0",
-    "electron": "5.0.8",
+    "electron": "9.1.0",
     "electron-builder": "22.1.0",
     "electron-webpack": "^2.7.4",
     "react": "^16.11.0",
